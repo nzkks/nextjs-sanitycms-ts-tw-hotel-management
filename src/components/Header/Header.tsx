@@ -4,13 +4,13 @@ import { MdDarkMode } from 'react-icons/md';
 
 const Header = () => {
   return (
-    <header className="py-10 px-4 container mx-auto text-xl flex flex-wrap md:flex-nowrap items-center justify-between">
-      <div className="flex items-center w-full md:2/3">
+    <header className="container mx-auto flex flex-wrap items-center justify-between px-4 py-10 text-xl md:flex-nowrap">
+      <div className="md:2/3 flex w-full items-center">
         <Link href="/" className="font-black text-[#F27405]">
           DRMS
         </Link>
-        <ul className="flex ites-center ml-5">
-          <li className="flex ites-center">
+        <ul className="ites-center ml-5 flex">
+          <li className="ites-center flex">
             <Link href="/auth">
               <FaUserCircle className="cursor-pointer" />
             </Link>
@@ -20,14 +20,14 @@ const Header = () => {
           </li>
         </ul>
       </div>
-      <ul className="flex ites-center justify-between w-full md:w-1/3 mt-4">
-        <li className="hover:-translate-y-2 duration-500 transition-all">
+      <ul className="mt-4 flex w-full items-center justify-between md:w-1/3">
+        <li className="transition-all duration-500 hover:-translate-y-2">
           <Link href="/">Home</Link>
         </li>
-        <li className="hover:-translate-y-2 duration-500 transition-all">
+        <li className="transition-all duration-500 hover:-translate-y-2">
           <Link href="/rooms">Rooms</Link>
         </li>
-        <li className="hover:-translate-y-2 duration-500 transition-all">
+        <li className="transition-all duration-500 hover:-translate-y-2">
           <Link href="/contact">Contact</Link>
         </li>
       </ul>

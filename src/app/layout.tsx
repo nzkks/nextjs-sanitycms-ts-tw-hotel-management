@@ -8,16 +8,16 @@ const poppins = Poppins({
   subsets: ['latin'],
   weight: ['400', '500', '700', '900'],
   style: ['normal', 'italic'],
-  variable: '--font-poppins'
+  variable: '--font-poppins',
 });
 
 export const metadata: Metadata = {
   title: 'Hotel Management System',
-  description: 'Discover your next stay!'
+  description: 'Discover your next stay!',
 };
 
 export default function RootLayout({
-  children
+  children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
