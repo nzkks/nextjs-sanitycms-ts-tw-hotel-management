@@ -6,7 +6,7 @@ const Header = () => {
   return (
     <header className="container mx-auto flex flex-wrap items-center justify-between px-4 py-10 text-xl md:flex-nowrap">
       <div className="md:2/3 flex w-full items-center">
-        <Link href="/" className="font-black text-[#F27405]">
+        <Link href="/" className="text-tertiary-dark font-black">
           DRMS
         </Link>
         <ul className="ites-center ml-5 flex">
