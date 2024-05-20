@@ -5,7 +5,7 @@ import { AiFillGithub } from 'react-icons/ai';
 import { FcGoogle } from 'react-icons/fc';
 
 const inputStyles =
-  'rounded:lg block w-full border border-gray-300 p-2.5 text-black focus:outline-none sm:text-sm';
+  'block w-full rounded-lg border border-gray-300 p-2.5 text-black focus:outline-none sm:text-sm';
 
 const defaultFormData = {
   name: '',
