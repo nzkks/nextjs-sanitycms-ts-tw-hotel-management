@@ -1,10 +1,16 @@
 import HeroSection from '@/components/HeroSection/HeroSection';
+import PageSearch from '@/components/PageSearch/PageSearch';
 
-export default function Home() {
+const Home = () => {
   return (
     <div>
       <HeroSection />
-      <h1>Hotel Management System</h1>
+      <PageSearch />
+      {/* Featured room section */}
+      {/* Gallery section */}
+      {/* Newsletter section */}
     </div>
   );
-}
+};
+
+export default Home;
