@@ -1,11 +1,12 @@
 'use client';
 
-import { ChangeEvent, FormEvent, useState } from 'react';
+import { ChangeEvent, FormEvent, useEffect, useState } from 'react';
 import { AiFillGithub } from 'react-icons/ai';
 import { FcGoogle } from 'react-icons/fc';
 import { signUp } from 'next-auth-sanity/client';
 import { signIn, useSession } from 'next-auth/react';
 import toast from 'react-hot-toast';
+import { useRouter } from 'next/navigation';
 
 const inputStyles =
   'block w-full rounded-lg border border-gray-300 p-2.5 text-black focus:outline-none sm:text-sm';
@@ -25,14 +26,19 @@ const Auth = () => {
   };
 
   const { data: session } = useSession();
-  console.log(session);
+  const router = useRouter();
+
+  useEffect(() => {
+    if (session) {
+      router.push('/');
+    }
+  }, [router, session]);
 
   const loginHandler = async () => {
     try {
       await signIn();
-      // push the user to the home page
+      router.push('/');
     } catch (error) {
-      console.error(error);
       toast.error('Something went wrong. Please try again.');
     }
   };
@@ -47,7 +53,6 @@ const Auth = () => {
         toast.success('Success. Please sign in to continue.');
       }
     } catch (error) {
-      console.error(error);
       toast.error('Something went wrong. Please try again.');
     } finally {
       setFormData(defaultFormData);
