@@ -4,6 +4,7 @@ import { ChangeEvent, FormEvent, useState } from 'react';
 import { AiFillGithub } from 'react-icons/ai';
 import { FcGoogle } from 'react-icons/fc';
 import { signUp } from 'next-auth-sanity/client';
+import { signIn, useSession } from 'next-auth/react';
 import toast from 'react-hot-toast';
 
 const inputStyles =
@@ -21,6 +22,19 @@ const Auth = () => {
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = event.target;
     setFormData({ ...formData, [name]: value });
+  };
+
+  const { data: session } = useSession();
+  console.log(session);
+
+  const loginHandler = async () => {
+    try {
+      await signIn();
+      // push the user to the home page
+    } catch (error) {
+      console.error(error);
+      toast.error('Something went wrong. Please try again.');
+    }
   };
 
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
@@ -49,8 +63,15 @@ const Auth = () => {
           </h1>
           <p>OR</p>
           <span className="inline-flex items-center">
-            <AiFillGithub className="mr-3 cursor-pointer text-4xl text-black dark:text-white" />
-            | <FcGoogle className="ml-3 cursor-pointer text-4xl" />
+            <AiFillGithub
+              onClick={loginHandler}
+              className="mr-3 cursor-pointer text-4xl text-black dark:text-white"
+            />
+            |{' '}
+            <FcGoogle
+              onClick={loginHandler}
+              className="ml-3 cursor-pointer text-4xl"
+            />
           </span>
         </div>
 
@@ -91,7 +112,7 @@ const Auth = () => {
           </button>
         </form>
 
-        <button className="text-b700 underline">
+        <button onClick={loginHandler} className="text-b700 underline">
           Already have an account? Login
         </button>
       </div>
