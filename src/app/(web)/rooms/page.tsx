@@ -6,6 +6,7 @@ import useSWR from 'swr';
 
 import { getRooms } from '@/libs/apis';
 import { Room } from '@/models/room';
+import Search from '@/components/Search/Search';
 
 const Rooms = () => {
   const [roomTypeFilter, setRoomTypeFilter] = useState('');
@@ -54,9 +55,18 @@ const Rooms = () => {
 
   return (
     <div className="container mx-auto pt-10">
-      {filteredRooms.map((room) => (
-        <div key={room._id}>{room.name}</div>
-      ))}
+      <Search
+        roomTypeFilter={roomTypeFilter}
+        setRoomTypeFilter={setRoomTypeFilter}
+        setSearchQuery={setSearchQuery}
+        searchQuery={searchQuery}
+      />
+
+      <div className="mt-20 flex flex-wrap gap-5">
+        {filteredRooms.map((room) => (
+          <div key={room._id}>{room.name}</div>
+        ))}
+      </div>
     </div>
   );
 };
