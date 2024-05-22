@@ -37,5 +37,6 @@ export async function getRoom(slug: string) {
       // next: { revalidate: 1800 }, // 30 mins
     },
   );
+
   return result;
 }
