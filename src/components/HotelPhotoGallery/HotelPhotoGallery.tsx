@@ -11,7 +11,10 @@ const HotelPhotoGallery: FC<{
 }> = ({ photos }) => {
   const [currentPhotoIndex, setCurrentPhotoIndex] = useState(0);
 
+  const maxVisiblePhotos = 4;
   const totalPhotos = photos.length;
+  const displayPhotos = photos.slice(1, maxVisiblePhotos - 1);
+  const remainingPhotosCount = totalPhotos - maxVisiblePhotos;
 
   const handlePrevious = () =>
     setCurrentPhotoIndex((prevIndex) =>
@@ -27,6 +30,15 @@ const HotelPhotoGallery: FC<{
     <div className="container mx-auto">
       <div className="relative grid gap-5 px-3 md:grid-cols-2">
         <div className="relative h-[540px] overflow-hidden rounded-2xl">
+          <div className="hidden h-full w-full items-center justify-center md:flex">
+            <Image
+              src={photos[0].url}
+              alt={`Room photo ${currentPhotoIndex + 1}`}
+              className="img scale-animation cursor-pointer"
+              width={150}
+              height={150}
+            />
+          </div>
           <div className="flex h-full w-full items-center justify-center md:hidden">
             <Image
               src={photos[currentPhotoIndex].url}
@@ -45,6 +57,37 @@ const HotelPhotoGallery: FC<{
           <div>
             {currentPhotoIndex + 1}/{totalPhotos}
           </div>
+        </div>
+
+        <div className="hidden h-full grid-cols-2 gap-5 md:grid">
+          {displayPhotos.map((photo, index) => (
+            <div
+              key={index}
+              className="h-64 cursor-pointer overflow-hidden rounded-2xl"
+            >
+              <Image
+                width={150}
+                height={150}
+                src={photo.url}
+                alt={`Room Photo ${index + 2}`}
+                className="img scale-animation"
+              />
+            </div>
+          ))}
+          {remainingPhotosCount > 0 && (
+            <div className="relative h-64 cursor-pointer overflow-hidden rounded-2xl">
+              <Image
+                width={150}
+                height={150}
+                src={photos[maxVisiblePhotos - 1].url}
+                alt={`Room Photo ${maxVisiblePhotos}`}
+                className="img"
+              />
+              <div className="absolute inset-0 flex cursor-pointer items-center justify-center bg-[rgba(0,0,0,0.5)] text-2xl text-white">
+                + {remainingPhotosCount}
+              </div>
+            </div>
+          )}
         </div>
       </div>
     </div>
