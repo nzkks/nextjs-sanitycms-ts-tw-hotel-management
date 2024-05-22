@@ -14,3 +14,16 @@ export async function getFeaturedRoom() {
 
   return result;
 }
+
+export async function getRooms() {
+  const result = await sanityClient.fetch<Room[]>(
+    queries.getRoomsQuery,
+    {},
+    {
+      cache: 'no-cache', // in development mode this is helpful
+      // next: { revalidate: 1800 }, // 30 mins
+    },
+  );
+
+  return result;
+}
