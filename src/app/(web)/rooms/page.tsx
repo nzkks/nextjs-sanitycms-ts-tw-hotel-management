@@ -7,6 +7,7 @@ import useSWR from 'swr';
 import { getRooms } from '@/libs/apis';
 import { Room } from '@/models/room';
 import Search from '@/components/Search/Search';
+import RoomCard from '@/components/RoomCard/RoomCard';
 
 const Rooms = () => {
   const [roomTypeFilter, setRoomTypeFilter] = useState('');
@@ -64,7 +65,7 @@ const Rooms = () => {
 
       <div className="mt-20 flex flex-wrap gap-5">
         {filteredRooms.map((room) => (
-          <div key={room._id}>{room.name}</div>
+          <RoomCard key={room._id} room={room} />
         ))}
       </div>
     </div>
