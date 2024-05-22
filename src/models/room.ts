@@ -7,10 +7,10 @@ type CoverImage = {
   url: string;
 };
 
-export type Image = {
+export interface Image {
   _key: string;
   url: string;
-};
+}
 
 type Amenity = {
   _key: string;
@@ -18,7 +18,7 @@ type Amenity = {
   icon: string;
 };
 
-export type Room = {
+export interface Room {
   _id: string;
   _type: string;
   coverImage: CoverImage;
@@ -35,4 +35,4 @@ export type Room = {
   slug: Slug;
   specialNote: string;
   type: string;
-};
+}
