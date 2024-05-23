@@ -37,6 +37,13 @@ const RoomDetails = (props: { params: { slug: string } }) => {
     return nextDay;
   };
 
+  const calcNumOfDays = () => {
+    if (!checkinDate || !checkoutDate) return 0;
+    const timeDiff = checkoutDate.getTime() - checkinDate.getTime();
+    const noOfDays = Math.ceil(timeDiff / (24 * 60 * 60 * 1000));
+    return noOfDays;
+  };
+
   return (
     <div>
       <HotelPhotoGallery photos={room.images} />
@@ -119,6 +126,7 @@ const RoomDetails = (props: { params: { slug: string } }) => {
               checkoutDate={checkoutDate}
               setCheckoutDate={setCheckoutDate}
               calcMinCheckoutDate={calcMinCheckoutDate}
+              calcNumOfDays={calcNumOfDays}
               adults={adults}
               setAdults={setAdults}
               noOfChildren={noOfChildren}
