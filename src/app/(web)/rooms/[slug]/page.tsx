@@ -9,6 +9,7 @@ import { GiSmokeBomb } from 'react-icons/gi';
 import { getRoom } from '@/libs/apis';
 import LoadingSpinner from '../../loading';
 import HotelPhotoGallery from '@/components/HotelPhotoGallery/HotelPhotoGallery';
+import BookRoomCTA from '@/components/BookRoomCTA/BookRoomCTA';
 
 const RoomDetails = (props: { params: { slug: string } }) => {
   const slug = props.params.slug;
@@ -92,6 +93,10 @@ const RoomDetails = (props: { params: { slug: string } }) => {
                 </div>
               </div>
             </div>
+          </div>
+
+          <div className="sticky top-10 h-fit overflow-auto rounded-xl shadow-lg dark:shadow dark:shadow-white md:col-span-4">
+            <BookRoomCTA discount={room.discount} price={room.price} />
           </div>
         </div>
       </div>
