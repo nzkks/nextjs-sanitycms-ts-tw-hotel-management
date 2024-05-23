@@ -7,11 +7,13 @@ import { LiaFireExtinguisherSolid } from 'react-icons/lia';
 import { AiOutlineMedicineBox } from 'react-icons/ai';
 import { GiSmokeBomb } from 'react-icons/gi';
 import toast from 'react-hot-toast';
+import axios from 'axios';
 
 import { getRoom } from '@/libs/apis';
 import LoadingSpinner from '../../loading';
 import HotelPhotoGallery from '@/components/HotelPhotoGallery/HotelPhotoGallery';
 import BookRoomCTA from '@/components/BookRoomCTA/BookRoomCTA';
+import { getStripe } from '@/libs/stripe';
 
 const RoomDetails = (props: { params: { slug: string } }) => {
   const slug = props.params.slug;
@@ -45,7 +47,7 @@ const RoomDetails = (props: { params: { slug: string } }) => {
     return noOfDays;
   };
 
-  const handleBookNowClick = () => {
+  const handleBookNowClick = async () => {
     if (!checkinDate || !checkoutDate)
       return toast.error('Please provide checkin / checkout date');
 
@@ -55,6 +57,32 @@ const RoomDetails = (props: { params: { slug: string } }) => {
     const numberOfDays = calcNumOfDays();
 
     const hotelRoomSlug = room.slug.current;
+
+    const stripe = await getStripe();
+
+    try {
+      const { data: stripeSession } = await axios.post('/api/stripe', {
+        checkinDate,
+        checkoutDate,
+        numberOfDays,
+        hotelRoomSlug,
+        adults,
+        children: noOfChildren,
+      });
+
+      if (stripe) {
+        const result = await stripe.redirectToCheckout({
+          sessionId: stripeSession.id,
+        });
+
+        if (result.error) {
+          toast.error('Payment Failed');
+        }
+      }
+    } catch (error) {
+      console.error(error);
+      toast.error('An error occured');
+    }
   };
 
   return (
