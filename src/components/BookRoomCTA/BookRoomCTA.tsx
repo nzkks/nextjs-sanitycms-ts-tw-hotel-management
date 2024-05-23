@@ -10,6 +10,10 @@ type Props = {
   checkoutDate: Date | null;
   setCheckoutDate: Dispatch<SetStateAction<Date | null>>;
   calcMinCheckoutDate: () => Date | null;
+  adults: number;
+  setAdults: Dispatch<SetStateAction<number>>;
+  noOfChildren: number;
+  setNoOfChildren: Dispatch<SetStateAction<number>>;
   discount: number;
   price: number;
   specialNote: string;
@@ -25,6 +29,10 @@ const BookRoomCTA: FC<Props> = (props) => {
     checkoutDate,
     setCheckoutDate,
     calcMinCheckoutDate,
+    adults,
+    setAdults,
+    noOfChildren,
+    setNoOfChildren,
   } = props;
 
   const discountPrice = price - (price * discount) / 100;
@@ -84,6 +92,43 @@ const BookRoomCTA: FC<Props> = (props) => {
             disabled={!checkinDate}
             minDate={calcMinCheckoutDate()}
             className="w-full rounded-lg border border-gray-300 p-2.5 text-black focus:border-primary focus:ring-primary"
+          />
+        </div>
+      </div>
+
+      <div className="mt-4 flex">
+        <div className="w-1/2 pr-2">
+          <label
+            htmlFor="adults"
+            className="block text-sm font-medium text-gray-900 dark:text-gray-400"
+          >
+            Adults
+          </label>
+          <input
+            type="number"
+            id="adults"
+            value={adults}
+            onChange={(e) => setAdults(+e.target.value)}
+            min={1}
+            max={5}
+            className="w-full rounded-lg border border-gray-300 p-2.5"
+          />
+        </div>
+        <div className="w-1/2 pl-2">
+          <label
+            htmlFor="children"
+            className="block text-sm font-medium text-gray-900 dark:text-gray-400"
+          >
+            Children
+          </label>
+          <input
+            type="number"
+            id="children"
+            value={noOfChildren}
+            onChange={(e) => setNoOfChildren(+e.target.value)}
+            min={0}
+            max={3}
+            className="w-full rounded-lg border border-gray-300 p-2.5"
           />
         </div>
       </div>

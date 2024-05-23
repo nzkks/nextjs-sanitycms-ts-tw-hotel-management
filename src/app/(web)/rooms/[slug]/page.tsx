@@ -17,6 +17,8 @@ const RoomDetails = (props: { params: { slug: string } }) => {
 
   const [checkinDate, setCheckinDate] = useState<Date | null>(null);
   const [checkoutDate, setCheckoutDate] = useState<Date | null>(null);
+  const [adults, setAdults] = useState(1);
+  const [noOfChildren, setNoOfChildren] = useState(0);
 
   const fetchRoom = async () => getRoom(slug);
   const { data: room, error, isLoading } = useSWR('/api/room', fetchRoom);
@@ -117,6 +119,10 @@ const RoomDetails = (props: { params: { slug: string } }) => {
               checkoutDate={checkoutDate}
               setCheckoutDate={setCheckoutDate}
               calcMinCheckoutDate={calcMinCheckoutDate}
+              adults={adults}
+              setAdults={setAdults}
+              noOfChildren={noOfChildren}
+              setNoOfChildren={setNoOfChildren}
             />
           </div>
         </div>
