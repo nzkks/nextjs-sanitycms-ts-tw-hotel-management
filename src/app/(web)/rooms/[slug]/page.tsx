@@ -96,7 +96,11 @@ const RoomDetails = (props: { params: { slug: string } }) => {
           </div>
 
           <div className="sticky top-10 h-fit overflow-auto rounded-xl shadow-lg dark:shadow dark:shadow-white md:col-span-4">
-            <BookRoomCTA discount={room.discount} price={room.price} />
+            <BookRoomCTA
+              discount={room.discount}
+              price={room.price}
+              specialNote={room.specialNote}
+            />
           </div>
         </div>
       </div>

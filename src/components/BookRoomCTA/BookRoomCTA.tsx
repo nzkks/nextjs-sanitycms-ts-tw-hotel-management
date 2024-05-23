@@ -5,10 +5,11 @@ import { FC } from 'react';
 type Props = {
   discount: number;
   price: number;
+  specialNote: string;
 };
 
 const BookRoomCTA: FC<Props> = (props) => {
-  const { discount, price } = props;
+  const { discount, price, specialNote } = props;
 
   const discountPrice = price - (price * discount) / 100;
 
@@ -30,6 +31,10 @@ const BookRoomCTA: FC<Props> = (props) => {
           ''
         )}
       </h3>
+
+      <div className="my-2 w-full border-b-2 border-b-secondary" />
+
+      <h4 className="my-8">{specialNote}</h4>
     </div>
   );
 };
