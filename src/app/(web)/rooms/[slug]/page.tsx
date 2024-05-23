@@ -6,6 +6,7 @@ import { MdOutlineCleaningServices } from 'react-icons/md';
 import { LiaFireExtinguisherSolid } from 'react-icons/lia';
 import { AiOutlineMedicineBox } from 'react-icons/ai';
 import { GiSmokeBomb } from 'react-icons/gi';
+import toast from 'react-hot-toast';
 
 import { getRoom } from '@/libs/apis';
 import LoadingSpinner from '../../loading';
@@ -42,6 +43,18 @@ const RoomDetails = (props: { params: { slug: string } }) => {
     const timeDiff = checkoutDate.getTime() - checkinDate.getTime();
     const noOfDays = Math.ceil(timeDiff / (24 * 60 * 60 * 1000));
     return noOfDays;
+  };
+
+  const handleBookNowClick = () => {
+    if (!checkinDate || !checkoutDate)
+      return toast.error('Please provide checkin / checkout date');
+
+    if (checkinDate > checkoutDate)
+      return toast.error('Please choose a valid checkin period');
+
+    const numberOfDays = calcNumOfDays();
+
+    const hotelRoomSlug = room.slug.current;
   };
 
   return (
@@ -131,6 +144,8 @@ const RoomDetails = (props: { params: { slug: string } }) => {
               setAdults={setAdults}
               noOfChildren={noOfChildren}
               setNoOfChildren={setNoOfChildren}
+              isBooked={room.isBooked}
+              handleBookNowClick={handleBookNowClick}
             />
           </div>
         </div>
