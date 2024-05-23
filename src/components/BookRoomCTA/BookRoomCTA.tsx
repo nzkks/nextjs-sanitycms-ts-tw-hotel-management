@@ -1,15 +1,31 @@
 'use client';
 
-import { FC } from 'react';
+import { Dispatch, FC, SetStateAction } from 'react';
+import DatePicker from 'react-datepicker';
+import 'react-datepicker/dist/react-datepicker.css';
 
 type Props = {
+  checkinDate: Date | null;
+  setCheckinDate: Dispatch<SetStateAction<Date | null>>;
+  checkoutDate: Date | null;
+  setCheckoutDate: Dispatch<SetStateAction<Date | null>>;
+  calcMinCheckoutDate: () => Date | null;
   discount: number;
   price: number;
   specialNote: string;
 };
 
 const BookRoomCTA: FC<Props> = (props) => {
-  const { discount, price, specialNote } = props;
+  const {
+    discount,
+    price,
+    specialNote,
+    checkinDate,
+    setCheckinDate,
+    checkoutDate,
+    setCheckoutDate,
+    calcMinCheckoutDate,
+  } = props;
 
   const discountPrice = price - (price * discount) / 100;
 
@@ -35,6 +51,42 @@ const BookRoomCTA: FC<Props> = (props) => {
       <div className="my-2 w-full border-b-2 border-b-secondary" />
 
       <h4 className="my-8">{specialNote}</h4>
+
+      <div className="flex">
+        <div className="w-1/2 pr-2">
+          <label
+            htmlFor="check-in-date"
+            className="block text-sm font-medium text-gray-900 dark:text-gray-400"
+          >
+            Check In date
+          </label>
+          <DatePicker
+            id="check-in-date"
+            selected={checkinDate}
+            onChange={(date) => setCheckinDate(date)}
+            dateFormat="dd/MM/yyyy"
+            minDate={new Date()}
+            className="w-full rounded-lg border border-gray-300 p-2.5 text-black focus:border-primary focus:ring-primary"
+          />
+        </div>
+        <div className="w-1/2 pl-2">
+          <label
+            htmlFor="check-out-date"
+            className="block text-sm font-medium text-gray-900 dark:text-gray-400"
+          >
+            Check Out date
+          </label>
+          <DatePicker
+            id="check-out-date"
+            selected={checkoutDate}
+            onChange={(date) => setCheckoutDate(date)}
+            dateFormat="dd/MM/yyyy"
+            disabled={!checkinDate}
+            minDate={calcMinCheckoutDate()}
+            className="w-full rounded-lg border border-gray-300 p-2.5 text-black focus:border-primary focus:ring-primary"
+          />
+        </div>
+      </div>
     </div>
   );
 };

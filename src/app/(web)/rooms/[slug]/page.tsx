@@ -1,5 +1,6 @@
 'use client';
 
+import { useState } from 'react';
 import useSWR from 'swr';
 import { MdOutlineCleaningServices } from 'react-icons/md';
 import { LiaFireExtinguisherSolid } from 'react-icons/lia';
@@ -14,6 +15,9 @@ import BookRoomCTA from '@/components/BookRoomCTA/BookRoomCTA';
 const RoomDetails = (props: { params: { slug: string } }) => {
   const slug = props.params.slug;
 
+  const [checkinDate, setCheckinDate] = useState<Date | null>(null);
+  const [checkoutDate, setCheckoutDate] = useState<Date | null>(null);
+
   const fetchRoom = async () => getRoom(slug);
   const { data: room, error, isLoading } = useSWR('/api/room', fetchRoom);
 
@@ -22,6 +26,14 @@ const RoomDetails = (props: { params: { slug: string } }) => {
     throw new Error('Cannot fetch data');
 
   if (!room) return <LoadingSpinner />;
+
+  const calcMinCheckoutDate = () => {
+    if (!checkinDate) return null;
+
+    const nextDay = new Date(checkinDate);
+    nextDay.setDate(nextDay.getDate() + 1);
+    return nextDay;
+  };
 
   return (
     <div>
@@ -100,6 +112,11 @@ const RoomDetails = (props: { params: { slug: string } }) => {
               discount={room.discount}
               price={room.price}
               specialNote={room.specialNote}
+              checkinDate={checkinDate}
+              setCheckinDate={setCheckinDate}
+              checkoutDate={checkoutDate}
+              setCheckoutDate={setCheckoutDate}
+              calcMinCheckoutDate={calcMinCheckoutDate}
             />
           </div>
         </div>
