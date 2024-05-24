@@ -4,6 +4,7 @@ import { CreateBookingDto, Room } from '@/models/room';
 import sanityClient from './sanity';
 import * as queries from './sanityQueries';
 import { Booking } from '@/models/booking';
+import { User } from '@/models/user';
 
 export async function getFeaturedRoom() {
   const result = await sanityClient.fetch<Room>(
@@ -124,6 +125,19 @@ export const updateHotelRoom = async (hotelRoomId: string) => {
 export const getUserBookings = async (userId: string) => {
   const result = await sanityClient.fetch<Booking>(
     queries.getUserBookingsQuery,
+    { userId },
+    {
+      cache: 'no-cache', // in development mode this is helpful
+      // next: { revalidate: 1800 }, // 30 mins
+    },
+  );
+
+  return result;
+};
+
+export const getUserDetails = async (userId: string) => {
+  const result = await sanityClient.fetch<User>(
+    queries.getUserDetailsQuery,
     { userId },
     {
       cache: 'no-cache', // in development mode this is helpful
