@@ -1,13 +1,21 @@
-import { FC } from 'react';
+'use client';
+
+import { Dispatch, FC, SetStateAction } from 'react';
 import { useRouter } from 'next/navigation';
 
 import { Booking } from '@/models/booking';
 
 type Props = {
   userBookings: Booking[];
+  setRoomId: Dispatch<SetStateAction<string | null>>;
+  toggleRatingModal: () => void;
 };
 
-const BookingsTable: FC<Props> = ({ userBookings }) => {
+const BookingsTable: FC<Props> = ({
+  userBookings,
+  setRoomId,
+  toggleRatingModal,
+}) => {
   const router = useRouter();
 
   return (
@@ -43,7 +51,17 @@ const BookingsTable: FC<Props> = ({ userBookings }) => {
               <td className="px-6 py-4">{booking.totalPrice}</td>
               <td className="px-6 py-4">{booking.discount}</td>
               <td className="px-6 py-4">0</td>
-              <td className="px-6 py-4">Rate button</td>
+              <td className="px-6 py-4">
+                <button
+                  onClick={() => {
+                    setRoomId(booking.hotelRoom._id);
+                    toggleRatingModal();
+                  }}
+                  className="font-medium text-blue-600 hover:underline"
+                >
+                  Rate
+                </button>
+              </td>
             </tr>
           ))}
         </tbody>

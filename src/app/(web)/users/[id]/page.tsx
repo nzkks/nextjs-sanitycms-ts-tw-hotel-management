@@ -5,6 +5,7 @@ import axios from 'axios';
 import useSWR from 'swr';
 import Image from 'next/image';
 import { signOut } from 'next-auth/react';
+import toast from 'react-hot-toast';
 import { FaSignOutAlt } from 'react-icons/fa';
 import { BsJournalBookmarkFill } from 'react-icons/bs';
 import { GiMoneyStack } from 'react-icons/gi';
@@ -14,6 +15,8 @@ import LoadingSpinner from '../../loading';
 import { User } from '@/models/user';
 import BookingsTable from '@/components/BookingsTable/BookingsTable';
 import BookingsChart from '@/components/BookingsChart/BookingsChart';
+import RatingModal from '@/components/RatingModal/RatingModal';
+import BackDrop from '@/components/BackDrop/BackDrop';
 
 const UserDetails = (props: { params: { id: string } }) => {
   const {
@@ -23,6 +26,43 @@ const UserDetails = (props: { params: { id: string } }) => {
   const [currentNav, setCurrentNav] = useState<
     'bookings' | 'amount' | 'ratings'
   >('bookings');
+  const [roomId, setRoomId] = useState<string | null>(null);
+  const [isRatingModalOpen, setIsRatingModalOpen] = useState(false);
+  const [isSubmittingReview, setIsSubmittingReview] = useState(false);
+  const [ratingValue, setRatingValue] = useState<number | null>(0);
+  const [ratingText, setRatingText] = useState('');
+
+  const toggleRatingModal = () =>
+    setIsRatingModalOpen((prevState) => !prevState);
+
+  const handleReviewSubmit = async () => {
+    if (!ratingText.trim().length || !ratingValue) {
+      return toast.error('Please provide a rating text and a rating');
+    }
+
+    if (!roomId) toast.error('Id not provided');
+
+    setIsSubmittingReview(true);
+
+    try {
+      const { data } = await axios.post('/api/users', {
+        roomId,
+        ratingValue,
+        reviewText: ratingText,
+      });
+      console.log(data);
+      toast.success('Review submitted successfully');
+    } catch (error) {
+      console.log(error);
+      toast.error('Review failed');
+    } finally {
+      setRoomId(null);
+      setRatingText('');
+      setRatingValue(null);
+      setIsSubmittingReview(false);
+      setIsRatingModalOpen(false);
+    }
+  };
 
   const fetchUserBooking = async () => getUserBookings(userId);
 
@@ -149,7 +189,13 @@ const UserDetails = (props: { params: { id: string } }) => {
           </nav>
 
           {currentNav === 'bookings' ? (
-            userBookings && <BookingsTable userBookings={userBookings} />
+            userBookings && (
+              <BookingsTable
+                userBookings={userBookings}
+                setRoomId={setRoomId}
+                toggleRatingModal={toggleRatingModal}
+              />
+            )
           ) : (
             <></>
           )}
@@ -161,6 +207,18 @@ const UserDetails = (props: { params: { id: string } }) => {
           )}
         </div>
       </div>
+
+      <RatingModal
+        isOpen={isRatingModalOpen}
+        ratingValue={ratingValue}
+        setRatingValue={setRatingValue}
+        ratingText={ratingText}
+        setRatingText={setRatingText}
+        isSubmittingReview={isSubmittingReview}
+        onReviewSubmit={handleReviewSubmit}
+        toggleRatingModal={toggleRatingModal}
+      />
+      <BackDrop isOpen={isRatingModalOpen} />
     </div>
   );
 };
