@@ -1,7 +1,12 @@
 import { getServerSession } from 'next-auth';
 import { NextResponse } from 'next/server';
 
-import { checkReviewExists, createReview, getUserDetails } from '@/libs/apis';
+import {
+  checkReviewExists,
+  createReview,
+  getUserDetails,
+  updateReview,
+} from '@/libs/apis';
 import { authOptions } from '@/libs/auth';
 
 export async function GET(req: Request, res: Response) {
@@ -40,7 +45,11 @@ export async function POST(req: Request, res: Response) {
 
     let data;
     if (alreadyExists) {
-      // update review
+      data = await updateReview({
+        reviewId: alreadyExists._id,
+        reviewText,
+        userRating: ratingValue,
+      });
     } else {
       data = await createReview({
         userId,
