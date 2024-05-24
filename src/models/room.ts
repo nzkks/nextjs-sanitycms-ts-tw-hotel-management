@@ -36,3 +36,15 @@ export interface Room {
   specialNote: string;
   type: string;
 }
+
+export interface CreateBookingDto {
+  user: string;
+  hotelRoom: string;
+  checkinDate: Date;
+  checkoutDate: Date;
+  numberOfDays: number;
+  adults: number;
+  children: number;
+  totalPrice: number;
+  discount: number;
+}
