@@ -3,6 +3,8 @@
 import axios from 'axios';
 import useSWR from 'swr';
 import Image from 'next/image';
+import { signOut } from 'next-auth/react';
+import { FaSignOutAlt } from 'react-icons/fa';
 
 import { getUserBookings } from '@/libs/apis';
 import LoadingSpinner from '../../loading';
@@ -66,7 +68,11 @@ const UserDetails = (props: { params: { id: string } }) => {
             <h6 className="pb-3 text-xl font-bold">{userDetails.name}</h6>
           </div>
           <div className="flex items-center">
-            {/* <p className="mr-2">Sign Out</p> */}
+            <p className="mr-2">Sign Out</p>
+            <FaSignOutAlt
+              className="cursor-pointer text-3xl"
+              onClick={() => signOut({ callbackUrl: '/' })}
+            />
           </div>
         </div>
 
@@ -93,7 +99,11 @@ const UserDetails = (props: { params: { id: string } }) => {
             Joined In {userDetails._createdAt.split('T')[0]}
           </p>
           <div className="my-2 flex items-center md:hidden">
-            {/* <p className="mr-2">Sign out</p> */}
+            <p className="mr-2">Sign out</p>
+            <FaSignOutAlt
+              className="cursor-pointer text-3xl"
+              onClick={() => signOut({ callbackUrl: '/' })}
+            />
           </div>
         </div>
       </div>
