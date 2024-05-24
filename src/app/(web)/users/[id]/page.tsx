@@ -1,19 +1,27 @@
 'use client';
 
+import { useState } from 'react';
 import axios from 'axios';
 import useSWR from 'swr';
 import Image from 'next/image';
 import { signOut } from 'next-auth/react';
 import { FaSignOutAlt } from 'react-icons/fa';
+import { BsJournalBookmarkFill } from 'react-icons/bs';
+import { GiMoneyStack } from 'react-icons/gi';
 
 import { getUserBookings } from '@/libs/apis';
 import LoadingSpinner from '../../loading';
 import { User } from '@/models/user';
+import BookingsTable from '@/components/BookingsTable/BookingsTable';
 
 const UserDetails = (props: { params: { id: string } }) => {
   const {
     params: { id: userId },
   } = props;
+
+  const [currentNav, setCurrentNav] = useState<
+    'bookings' | 'amount' | 'ratings'
+  >('bookings');
 
   const fetchUserBooking = async () => getUserBookings(userId);
 
@@ -105,6 +113,45 @@ const UserDetails = (props: { params: { id: string } }) => {
               onClick={() => signOut({ callbackUrl: '/' })}
             />
           </div>
+
+          <nav className="sticky top-0 mx-auto mb-8 mt-7 w-fit rounded-lg border border-gray-200 bg-gray-50 px-2 py-3 text-gray-700 md:w-full md:px-5">
+            <ol
+              className={`${
+                currentNav === 'bookings' ? 'text-blue-600' : 'text-gray-700'
+              } mr-1 inline-flex items-center space-x-1 md:mr-5 md:space-x-3`}
+            >
+              <li
+                onClick={() => setCurrentNav('bookings')}
+                className="inline-flex cursor-pointer items-center"
+              >
+                <BsJournalBookmarkFill />
+                <a className="mx-1 inline-flex items-center text-xs font-medium md:mx-3 md:text-sm">
+                  Current Bookings
+                </a>
+              </li>
+            </ol>
+            <ol
+              className={`${
+                currentNav === 'amount' ? 'text-blue-600' : 'text-gray-700'
+              } mr-1 inline-flex items-center space-x-1 md:mr-5 md:space-x-3`}
+            >
+              <li
+                onClick={() => setCurrentNav('amount')}
+                className="inline-flex cursor-pointer items-center"
+              >
+                <GiMoneyStack />
+                <a className="mx-1 inline-flex items-center text-xs font-medium md:mx-3 md:text-sm">
+                  Amount Spent
+                </a>
+              </li>
+            </ol>
+          </nav>
+
+          {currentNav === 'bookings' ? (
+            userBookings && <BookingsTable bookingDetails={userBookings} />
+          ) : (
+            <></>
+          )}
         </div>
       </div>
     </div>
