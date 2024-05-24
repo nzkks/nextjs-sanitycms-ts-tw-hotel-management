@@ -20,13 +20,13 @@ const booking = {
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'checkInDate',
+      name: 'checkinDate',
       title: 'Check-in Date',
       type: 'date',
       validation: (Rule) => Rule.required(),
     }),
     defineField({
-      name: 'checkOutDate',
+      name: 'checkoutDate',
       title: 'Check-out Date',
       type: 'date',
       validation: (Rule) => Rule.required(),
