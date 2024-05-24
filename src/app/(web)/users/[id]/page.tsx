@@ -13,6 +13,7 @@ import { getUserBookings } from '@/libs/apis';
 import LoadingSpinner from '../../loading';
 import { User } from '@/models/user';
 import BookingsTable from '@/components/BookingsTable/BookingsTable';
+import BookingsChart from '@/components/BookingsChart/BookingsChart';
 
 const UserDetails = (props: { params: { id: string } }) => {
   const {
@@ -149,6 +150,12 @@ const UserDetails = (props: { params: { id: string } }) => {
 
           {currentNav === 'bookings' ? (
             userBookings && <BookingsTable userBookings={userBookings} />
+          ) : (
+            <></>
+          )}
+
+          {currentNav === 'amount' ? (
+            userBookings && <BookingsChart userBookings={userBookings} />
           ) : (
             <></>
           )}
