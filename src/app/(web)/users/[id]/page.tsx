@@ -148,7 +148,7 @@ const UserDetails = (props: { params: { id: string } }) => {
           </nav>
 
           {currentNav === 'bookings' ? (
-            userBookings && <BookingsTable bookingDetails={userBookings} />
+            userBookings && <BookingsTable userBookings={userBookings} />
           ) : (
             <></>
           )}

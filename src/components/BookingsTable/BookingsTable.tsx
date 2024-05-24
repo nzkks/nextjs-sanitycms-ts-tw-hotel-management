@@ -4,10 +4,10 @@ import { useRouter } from 'next/navigation';
 import { Booking } from '@/models/booking';
 
 type Props = {
-  bookingDetails: Booking[];
+  userBookings: Booking[];
 };
 
-const BookingsTable: FC<Props> = ({ bookingDetails }) => {
+const BookingsTable: FC<Props> = ({ userBookings }) => {
   const router = useRouter();
 
   return (
@@ -25,7 +25,7 @@ const BookingsTable: FC<Props> = ({ bookingDetails }) => {
           </tr>
         </thead>
         <tbody>
-          {bookingDetails.map((booking) => (
+          {userBookings.map((booking) => (
             <tr
               key={booking._id}
               className="border-b bg-white hover:bg-gray-50"
