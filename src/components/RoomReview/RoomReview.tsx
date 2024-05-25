@@ -24,8 +24,6 @@ const RoomReview: FC<{ roomId: string }> = ({ roomId }) => {
 
   if (!roomReviews) return <LoadingSpinner />;
 
-  console.log(roomReviews);
-
   return (
     <>
       {roomReviews &&

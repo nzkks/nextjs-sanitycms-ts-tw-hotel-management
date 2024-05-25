@@ -24,7 +24,6 @@ export async function POST(req: Request, res: Response) {
       webhookSecret,
     );
   } catch (error: any) {
-    console.log(`⚠️  Webhook signature verification failed: ${error}`); // for demo purposes only
     return new NextResponse(`Webhook Error`, { status: 500 });
   }
 
@@ -67,7 +66,10 @@ export async function POST(req: Request, res: Response) {
       });
 
     default:
-      console.log('Unhandled event type: ', event.type);
+      NextResponse.json('Booking Unsuccessful', {
+        status: 400,
+        statusText: event.type,
+      });
   }
 
   return NextResponse.json('Event Received', {
