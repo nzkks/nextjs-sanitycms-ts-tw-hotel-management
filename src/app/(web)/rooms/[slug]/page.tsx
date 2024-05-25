@@ -14,6 +14,7 @@ import LoadingSpinner from '../../loading';
 import HotelPhotoGallery from '@/components/HotelPhotoGallery/HotelPhotoGallery';
 import BookRoomCTA from '@/components/BookRoomCTA/BookRoomCTA';
 import { getStripe } from '@/libs/stripe';
+import RoomReview from '@/components/RoomReview/RoomReview';
 
 const RoomDetails = (props: { params: { slug: string } }) => {
   const slug = props.params.slug;
@@ -152,6 +153,15 @@ const RoomDetails = (props: { params: { slug: string } }) => {
                     <GiSmokeBomb />
                     <p className="ml-2 text-xs md:text-base">Smoke Detectors</p>
                   </div>
+                </div>
+              </div>
+
+              <div className="rounded-lg p-6 shadow dark:shadow-white">
+                <div className="mb-4 items-center">
+                  <p className="font-semibold md:text-lg">Customer Reviews</p>
+                </div>
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
+                  <RoomReview roomId={room._id} />
                 </div>
               </div>
             </div>

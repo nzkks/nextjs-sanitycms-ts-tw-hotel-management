@@ -5,7 +5,7 @@ import sanityClient from './sanity';
 import * as queries from './sanityQueries';
 import { Booking } from '@/models/booking';
 import { User } from '@/models/user';
-import { CreateReviewDto, UpdateReviewDto } from '@/models/review';
+import { CreateReviewDto, Review, UpdateReviewDto } from '@/models/review';
 
 export async function getFeaturedRoom() {
   const result = await sanityClient.fetch<Room>(
@@ -231,4 +231,16 @@ export const createReview = async ({
   );
 
   return data;
+};
+
+export const getRoomReviews = async (roomId: string) => {
+  const result = await sanityClient.fetch<Review[]>(
+    queries.getRoomReviewsQuery,
+    {
+      roomId,
+    },
+    { cache: 'no-cache' },
+  );
+
+  return result;
 };

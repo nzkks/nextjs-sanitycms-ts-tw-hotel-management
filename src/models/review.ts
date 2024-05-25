@@ -10,3 +10,11 @@ export interface CreateReviewDto {
   reviewText: string;
   userRating: number;
 }
+
+export interface Review {
+  text: string;
+  user: { name: string };
+  userRating: number;
+  _createdAt: Date;
+  _id: string;
+}
