@@ -3,6 +3,8 @@ import axios from 'axios';
 import useSWR from 'swr';
 
 import LoadingSpinner from '@/app/(web)/loading';
+import Rating from '../Rating/Rating';
+import { Review } from '@/models/review';
 
 const RoomReview: FC<{ roomId: string }> = ({ roomId }) => {
   const fetchRoomReviews = async () => {
@@ -27,7 +29,7 @@ const RoomReview: FC<{ roomId: string }> = ({ roomId }) => {
   return (
     <>
       {roomReviews &&
-        roomReviews.map((review) => (
+        roomReviews.map((review: Review) => (
           <div
             className="rounded-lg bg-gray-100 p-4 dark:bg-gray-900"
             key={review._id}
@@ -35,7 +37,7 @@ const RoomReview: FC<{ roomId: string }> = ({ roomId }) => {
             <div className="mb-2 flex font-semibold">
               <p>{review.user.name}</p>
               <div className="ml-4 flex items-center text-lg text-tertiary-light">
-                Rating stars goes here
+                <Rating rating={review.userRating} />
               </div>
             </div>
 
