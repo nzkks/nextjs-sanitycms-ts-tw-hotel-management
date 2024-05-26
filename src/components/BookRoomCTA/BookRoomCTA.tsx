@@ -79,7 +79,10 @@ const BookRoomCTA: FC<Props> = (props) => {
             selected={checkinDate}
             onChange={(date) => setCheckinDate(date)}
             dateFormat="dd/MM/yyyy"
+            startDate={checkinDate}
+            endDate={checkoutDate}
             minDate={new Date()}
+            selectsStart
             className="w-full rounded-lg border border-gray-300 p-2.5 text-black focus:border-primary focus:ring-primary"
           />
         </div>
@@ -96,7 +99,10 @@ const BookRoomCTA: FC<Props> = (props) => {
             onChange={(date) => setCheckoutDate(date)}
             dateFormat="dd/MM/yyyy"
             disabled={!checkinDate}
+            startDate={checkinDate}
+            endDate={checkoutDate}
             minDate={calcMinCheckoutDate()}
+            selectsEnd
             className="w-full rounded-lg border border-gray-300 p-2.5 text-black focus:border-primary focus:ring-primary"
           />
         </div>
